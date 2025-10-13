@@ -1,11 +1,11 @@
 #include<math.h>
 #include<stdio.h>
 /**
-* @breif рассчитывает значение А
+* @brief рассчитывает значение А
 * @param x - значение x
 * @param y - значение y
 * @param z - значение z
-* @retun рассчитанное значение А
+* @return рассчитанное значение А
 */
 double getA(const double x, const double y, const double z);
 /**
@@ -13,7 +13,7 @@ double getA(const double x, const double y, const double z);
 * @param x - значение x
 * @param y - значение y
 * @param z - значение z
-* @retun рассчитанное значение В
+* @return рассчитанное значение В
 */
 double getB(const double x, const double y, const double z);
 int main()
