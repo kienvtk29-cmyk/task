@@ -1,0 +1,32 @@
+#include<math.h>
+#include<stdio.h>
+#include<stdlib.h>
+
+double a = 1.5, x;
+double getA1(const double a, const double x);
+double getA2(const double a, const double x);
+int main()
+{
+	scanf_s("%lf", &x);
+	if(a*x<=0)
+	{
+		printf("Incorrect input");
+	}
+	else if (0< a* x < 1)
+	{	
+		printf("%lf", getA1(a, x));
+	
+
+	}
+	else {
+		printf("%lf", getA2(a, x));
+	}
+ }
+double getA1(const double a, const double x)
+{
+	return a * x - log10(a * x);
+}
+double getA2(const double a, const double x)
+{
+	return a * x + log10(a * x);
+}
