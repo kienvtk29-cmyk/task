@@ -33,18 +33,4 @@ double getB(const double x, const double y, const double z)
 {
 	return sqrt(x * y / z) + pow(cos((pow((x + y), 2))), 2);
 }
-#include<stdio.h>
-#include<stdlib.h>
-#include<math.h>
-int main() {
-	double x = 0.00;
-	double dx = 0.1;
-	double getA(const double x);
-	double getA(const double x) {
-		for (x = 0.00, x <= 1, x++0.1) {
 
-		}
-	}
-
-	return 0;
-}
