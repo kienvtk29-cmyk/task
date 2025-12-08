@@ -23,7 +23,7 @@ int main()
 	const double z = 0.7;
 	printf("%lf\n", getA(x, y, z));
 	printf("%lf", getB(x, y, z));
-
+	return 0;
 }
 double getA(const double x, const double y, const double z)
 {
@@ -33,4 +33,5 @@ double getB(const double x, const double y, const double z)
 {
 	return sqrt(x * y / z) + pow(cos((pow((x + y), 2))), 2);
 }
+
 
