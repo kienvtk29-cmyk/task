@@ -22,4 +22,5 @@ int main()
 		printf("The sum of x, y and z is negative %lf", getsum(x, y, z));
 	else
 		printf("The sum of x, y and z is zero");
+	return 0;
 }
