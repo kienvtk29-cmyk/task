@@ -1,7 +1,9 @@
+#define _USE_MATH_DEFINES
 #include<math.h>
 #include<stdio.h>
 #include<stdlib.h>
-#include<cmath>
+
+
 
 double getSide(const double a, const double b, const double  t);
 double getS(const double a, const double b,  const double  t);
@@ -17,7 +19,6 @@ void checkPositive(const double a, const double b)
 }
 int main()
 {
-	double pi = atan(1) * 4;
 	double a, b, c;
 	printf("enter first side\n");
 	scanf_s("%lf", &a);
@@ -26,7 +27,7 @@ int main()
 	checkPositive(a, b);
 	printf("enter corner\n");
 	scanf_s("%lf", &c);
-	double t = c * pi / 180;
+	double t = c * M_PI / 180.0;
 	printf("the third side is %lf\n", getSide(a,b,t ));
 	printf("the square is %lf\n", getS(a,b,t));
 	printf("the R is %lf\n", getR(a, b, t));
