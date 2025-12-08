@@ -1,9 +1,9 @@
-﻿#include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
 void find36(int* arr, const size_t size);
-int findodd(int* arr, const size_t size);
+int findeven(int* arr, const size_t size);
 void printArray(int* arr, const size_t size);
 void fillArray(int* arr, const size_t size);
 void fillRandom(int* arr, const size_t size);
@@ -16,7 +16,7 @@ enum { RANDOM = 1, MANUAL = 2 };
 
 int main()
 {
-    srand(time(NULL));
+
 
     printf("enter array size: ");
     size_t size = getSize();
@@ -49,17 +49,17 @@ int main()
 
     printArray(arr, size);
 
+ 
+
+
+    find36(arr, size);
+    int sum = findeven(arr, size);
+    printf("Sum of negative even numbers: %d\n", sum);
+
     int minindex, maxindex;
     findMaxMin(arr, size, &minindex, &maxindex);
     printf("Min index = %d, Max index = %d\n", minindex, maxindex);
-
     replaceN(minindex, maxindex, arr, size);
-
-    int sum = findodd(arr, size);
-    printf("Sum of negative odd numbers: %d\n", sum);
-
-    find36(arr, size);
-
     free(arr);
     return 0;
 }
@@ -114,11 +114,11 @@ void fillRandom(int* arr, const size_t size)
         arr[i] = (rand() % (end - start + 1)) + start;
 }
 
-int findodd(int* arr, const size_t size)
+int findeven(int* arr, const size_t size)
 {
     int sum = 0;
     for (size_t i = 0; i < size; i++)
-        if (arr[i] < 0 && arr[i] % 2 != 0)
+        if (arr[i] < 0 && arr[i] % 2 == 0)
             sum += arr[i];
 
     return sum;
@@ -138,7 +138,7 @@ void findMaxMin(int* arr, size_t size, int* minindex, int* maxindex)
     *maxindex = 0;
     *minindex = 0;
 
-    for (size_t i = 1; i < size; i++)
+    for (int i = 1; i < size; i++)
     {
         if (arr[i] > arr[*maxindex])
             *maxindex = i;
@@ -149,13 +149,7 @@ void findMaxMin(int* arr, size_t size, int* minindex, int* maxindex)
 
 void replaceN(int minindex, int maxindex, int* arr, size_t size)
 {
-    if (minindex > maxindex) {
-        int temp = minindex;
-        minindex = maxindex;
-        maxindex = temp;
-    }
-
-    for (int i = minindex; i <= maxindex; i++)
+    for (int i = minindex+1; i < maxindex; i++)
         arr[i] = 0;
 
     printf("Array after replacement: ");
