@@ -32,3 +32,4 @@ double getSum3(const double A, const double n){
 	
 	return A * 3 * n;
 }
+
