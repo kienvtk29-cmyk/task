@@ -16,6 +16,11 @@ double getA(const double x, const double y, const double z);
 * @return рассчитанное значение В
 */
 double getB(const double x, const double y, const double z);
+
+/**
+* @brief точка входа в программу
+* @return 0, если программа выполнена корректно 
+*/
 int main()
 {
 	const double x = 0.5;
@@ -33,5 +38,6 @@ double getB(const double x, const double y, const double z)
 {
 	return sqrt(x * y / z) + pow(cos((pow((x + y), 2))), 2);
 }
+
 
 
