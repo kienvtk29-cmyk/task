@@ -29,7 +29,7 @@ int containsDigit1(int x);
 /// @brief Вставляет максимальный элемент после всех элементов, содержащих цифру 1
 /// @param arr Указатель на массив чисел
 /// @param size Указатель на размер массива (может изменяться)
-void insertMaxAfterOnes(int** arr, size_t* size);
+void insertMaxAfterOnes(int** arr,size_t* size);
 
 /// @brief Находит индекс максимального элемента массива
 /// @param arr Массив чисел
@@ -106,7 +106,7 @@ int main()
 }
 
 int Value() {
-    int x;
+    int x=0;
     if (scanf_s("%d", &x) != 1) {
         printf("Input error\n");
         exit(1);
