@@ -3,47 +3,51 @@
 // @brief Находит и выводит числа массива, кратные 6
 // @param arr Массив чисел
 // @param size Размер массива
-void find36(int* arr, size_t size);
-
+void find36(const int* arr,const size_t size);
+// @brief создать матрицу копирования
+// @param arr Массив чисел
+// @param size Размер массива
+// @return Индекс минимального элемента
+int* copyArray(const int* arr, const size_t size);
 // @brief Вычисляет сумму отрицательных чётных чисел массива
 // @param arr Массив чисел
 // @param size Размер массива
 // @return Сумма отрицательных чётных чисел
-int findeven(int* arr, size_t size);
+int findeven(const int* arr,const size_t size);
 
 // @brief Выводит массив на экран
 // @param arr Массив чисел
 // @param size Размер массива
-void printArray(int* arr, size_t size);
+void printArray(const int* arr,const size_t size);
 
 // @brief Заполняет массив вручную, вводя значения с клавиатуры
 // @param arr Массив чисел
 // @param size Размер массива
-void fillArray(int* arr, size_t size);
+void fillArray(int* arr,const size_t size);
 
 // @brief Заполняет массив случайными числами в заданном диапазоне
 // @param arr Массив чисел
 // @param size Размер массива
-void fillRandom(int* arr, size_t size);
+void fillRandom(int* arr,const size_t size);
 
 // @brief Находит индекс максимального элемента массива
 // @param arr Массив чисел
 // @param size Размер массива
 // @return Индекс максимального элемента
-int findMax(int* arr, size_t size);
+int findMax(const int* arr,const size_t size);
 
 // @brief Находит индекс минимального элемента массива
 // @param arr Массив чисел
 // @param size Размер массива
 // @return Индекс минимального элемента
-int findMin(int* arr, size_t size);
+int findMin(const int* arr,const size_t size);
 
 // @brief Заменяет элементы массива между минимальным и максимальным индексом на 0
 // @param minindex Индекс минимального элемента
 // @param maxindex Индекс максимального элемента
 // @param arr Массив чисел
 // @param size Размер массива
-void replaceN(int minindex, int maxindex, int* arr, size_t size);
+void replaceN(const int minindex, const int maxindex, int* arr,const  size_t size);
 
 // @brief Считывает размер массива с клавиатуры
 // @return Значение размера
@@ -52,7 +56,11 @@ size_t getSize();
 // @brief Считывает целое число с клавиатуры
 // @return Введённое число
 int Value();
-
+// @brief Проверьте, выделена ли память для матрицы.
+// @param arr Массив чисел
+// @param size Размер массива
+void checkarr(const int* arr,const  size_t size);
+// @brief Позволяет пользователям выбрать RANDOM = 1 или MANUAL = 2
 enum { RANDOM = 1, MANUAL = 2 };
 
 // @brief Точка входа в программу
@@ -65,11 +73,7 @@ int main()
     size_t size = getSize();
 
     int* arr = (int*)malloc(size * sizeof(int));
-    if (arr == NULL)
-    {
-        printf("Memory error\n");
-        exit(1);
-    }
+    checkarr(arr, size);
 
     printf("choose RANDOM press %d, MANUAL press %d: ", RANDOM, MANUAL);
     int choice = Value();
@@ -91,7 +95,7 @@ int main()
     }
 
     printArray(arr, size);
-
+    void find36(const int* arr, const size_t size);
  
 
 
@@ -139,7 +143,7 @@ void fillArray(int* arr, const size_t size)
     }
 }
 
-void printArray(int* arr, const size_t size)
+void printArray(const int* arr, const size_t size)
 {
     printf("Array: ");
     for (size_t i = 0; i < size; i++)
@@ -158,26 +162,29 @@ void fillRandom(int* arr, const size_t size)
         arr[i] = (rand() % (end - start + 1)) + start;
 }
 
-int findeven(int* arr, const size_t size)
+int findeven(const int* arr, const size_t size)
 {
     int sum = 0;
     for (size_t i = 0; i < size; i++)
         if (arr[i] < 0 && arr[i] % 2 == 0)
             sum += arr[i];
-
+        else
+            printf("there is no negative even number");
     return sum;
 }
 
-void find36(int* arr, const size_t size)
+void find36(const int* arr, const size_t size)
 {
     printf("Numbers divisible by 6: ");
     for (size_t i = 0; i < size; i++)
         if (arr[i] % 6 == 0)
             printf("%d ", arr[i]);
+        else
+            printf("there are no numbers divisiable by 6");
     printf("\n");
 }
 
-int findMax(int* arr,const size_t size)
+int findMax(const int* arr,const size_t size)
 {
     int maxindex = 0;
 
@@ -189,7 +196,7 @@ int findMax(int* arr,const size_t size)
     }
     return maxindex;
 }
-int findMin(int* arr,const size_t size)
+int findMin(const int* arr,const size_t size)
 {
     int minindex = 0;
 
@@ -202,11 +209,28 @@ int findMin(int* arr,const size_t size)
     return minindex;
 }
 
-void replaceN(const int minindex,const int maxindex, int* arr,const  size_t size)
+void replaceN(const int minindex,const int maxindex, int* copyArr,const  size_t size)
 {
     for (size_t i = minindex+1; i < maxindex; i++)
-        arr[i] = 0;
+        copyArr[i] = 0;
 
     printf("Array after replacement: ");
-    printArray(arr, size);
+    printArray(copyArr, size);
+}
+void checkarr(const int* arr,const size_t size) {
+    int* arr = (int*)malloc(size * sizeof(int));
+    if (arr == NULL)
+    {
+        printf("Memory error\n");
+        exit(1);
+    }
+}
+int* copyArray(const int* arr, const size_t size)
+{
+    int* copyArr = (int*)malloc(sizeof(int) * size);
+    for (size_t i = 0; i < size; i++)
+    {
+        copyArr[i] = arr[i];
+    }
+    return copyArr;
 }
