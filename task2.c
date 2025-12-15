@@ -1,16 +1,39 @@
 #include<math.h>
 #include<stdio.h>
-
-double A, n;
+/**
+ * @brief Вычисляет произведение A и n
+ * @param A Число A
+ * @param n Коэффициент n
+ * @return Результат A * n
+ */
 double getSum1(const double A, const double n);
+
+/**
+ * @brief Вычисляет произведение A и 2n
+ * @param A Число A
+ * @param n Коэффициент n
+ * @return Результат A * 2 * n
+ */
 double getSum2(const double A, const double n);
+
+/**
+ * @brief Вычисляет произведение A и 3n
+ * @param A Число A
+ * @param n Коэффициент n
+ * @return Результат A * 3 * n
+ */
 double getSum3(const double A, const double n);
+
+/**
+ * @brief Точка входа в программу
+ * @return 0, если программа выполнена корректно
+ */
 int main()
 {
-
-	printf("enter your number");
+	double A =0, n = 0;
+	printf("enter your number ")s;
 	scanf_s("%lf", &A);
-	printf("enter coefficient");
+	printf("enter coefficient ");
 	scanf_s("%lf", &n);
 	
 	printf("n time %.2lf\n", getSum1(A,n));
@@ -32,4 +55,3 @@ double getSum3(const double A, const double n){
 	
 	return A * 3 * n;
 }
-
