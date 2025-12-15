@@ -1,19 +1,62 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
+// @brief Находит и выводит числа массива, кратные 6
+// @param arr Массив чисел
+// @param size Размер массива
+void find36(int* arr, size_t size);
 
-void find36(int* arr, const size_t size);
-int findeven(int* arr, const size_t size);
-void printArray(int* arr, const size_t size);
-void fillArray(int* arr, const size_t size);
-void fillRandom(int* arr, const size_t size);
-void findMaxMin(int* arr, size_t size, int* minindex, int* maxindex);
+// @brief Вычисляет сумму отрицательных чётных чисел массива
+// @param arr Массив чисел
+// @param size Размер массива
+// @return Сумма отрицательных чётных чисел
+int findeven(int* arr, size_t size);
+
+// @brief Выводит массив на экран
+// @param arr Массив чисел
+// @param size Размер массива
+void printArray(int* arr, size_t size);
+
+// @brief Заполняет массив вручную, вводя значения с клавиатуры
+// @param arr Массив чисел
+// @param size Размер массива
+void fillArray(int* arr, size_t size);
+
+// @brief Заполняет массив случайными числами в заданном диапазоне
+// @param arr Массив чисел
+// @param size Размер массива
+void fillRandom(int* arr, size_t size);
+
+// @brief Находит индекс максимального элемента массива
+// @param arr Массив чисел
+// @param size Размер массива
+// @return Индекс максимального элемента
+int findMax(int* arr, size_t size);
+
+// @brief Находит индекс минимального элемента массива
+// @param arr Массив чисел
+// @param size Размер массива
+// @return Индекс минимального элемента
+int findMin(int* arr, size_t size);
+
+// @brief Заменяет элементы массива между минимальным и максимальным индексом на 0
+// @param minindex Индекс минимального элемента
+// @param maxindex Индекс максимального элемента
+// @param arr Массив чисел
+// @param size Размер массива
 void replaceN(int minindex, int maxindex, int* arr, size_t size);
+
+// @brief Считывает размер массива с клавиатуры
+// @return Значение размера
 size_t getSize();
+
+// @brief Считывает целое число с клавиатуры
+// @return Введённое число
 int Value();
 
 enum { RANDOM = 1, MANUAL = 2 };
 
+// @brief Точка входа в программу
+// @return 0 при успешном завершении программы
 int main()
 {
 
@@ -28,7 +71,7 @@ int main()
         exit(1);
     }
 
-    printf("choose RANDOM press 1, MANUAL press 2: ");
+    printf("choose RANDOM press %d, MANUAL press %d: ", RANDOM, MANUAL);
     int choice = Value();
 
     switch (choice)
@@ -56,8 +99,9 @@ int main()
     int sum = findeven(arr, size);
     printf("Sum of negative even numbers: %d\n", sum);
 
-    int minindex, maxindex;
-    findMaxMin(arr, size, &minindex, &maxindex);
+    
+    int minindex = findMin(arr, size);
+    int maxindex = findMax(arr, size);
     printf("Min index = %d, Max index = %d\n", minindex, maxindex);
     replaceN(minindex, maxindex, arr, size);
     free(arr);
@@ -133,23 +177,34 @@ void find36(int* arr, const size_t size)
     printf("\n");
 }
 
-void findMaxMin(int* arr, size_t size, int* minindex, int* maxindex)
+int findMax(int* arr,const size_t size)
 {
-    *maxindex = 0;
-    *minindex = 0;
+    int maxindex = 0;
 
-    for (int i = 1; i < size; i++)
+    for (size_t i = 1; i < size; i++)
     {
-        if (arr[i] > arr[*maxindex])
-            *maxindex = i;
-        if (arr[i] < arr[*minindex])
-            *minindex = i;
+        if (arr[i] > arr[maxindex])
+            maxindex = i;
+
     }
+    return maxindex;
+}
+int findMin(int* arr,const size_t size)
+{
+    int minindex = 0;
+
+    for (size_t i = 1; i < size; i++)
+    {
+        if (arr[i] < arr[minindex])
+            minindex = i;
+
+    }
+    return minindex;
 }
 
-void replaceN(int minindex, int maxindex, int* arr, size_t size)
+void replaceN(const int minindex,const int maxindex, int* arr,const  size_t size)
 {
-    for (int i = minindex+1; i < maxindex; i++)
+    for (size_t i = minindex+1; i < maxindex; i++)
         arr[i] = 0;
 
     printf("Array after replacement: ");
