@@ -4,7 +4,7 @@
 /// @brief Выводит массив на экран
 /// @param arr Массив чисел
 /// @param size Размер массива
-void printArray(int* arr, const size_t size);
+void printArray(const int* arr, const size_t size);
 
 /// @brief Заполняет массив вручную
 /// @param arr Массив чисел
@@ -24,7 +24,7 @@ void replaceMaxWithOpposite(int* arr, const size_t size);
 /// @brief Проверяет, содержит ли число цифру 1
 /// @param x Число для проверки
 /// @return 1, если содержит цифру 1, иначе 0
-int containsDigit1(const int x);
+int containsDigit1(int x);
 
 /// @brief Вставляет максимальный элемент после всех элементов, содержащих цифру 1
 /// @param arr Указатель на массив чисел
@@ -35,7 +35,7 @@ void insertMaxAfterOnes(int** arr, size_t* size);
 /// @param arr Массив чисел
 /// @param size Размер массива
 /// @return Индекс максимального элемента
-int findMaxIndex(int* arr, const size_t size);
+int findMaxIndex(const int* arr, const size_t size);
 
 /// @brief Создаёт массив A на основе массива C с изменениями в первых 10 элементах
 /// @param A Массив для заполнения
@@ -50,7 +50,7 @@ size_t getSize();
 /// @brief Считывает целое число с клавиатуры
 /// @return Введённое число
 int Value();
-
+// @brief Позволяет пользователям выбрать RANDOM = 1 или MANUAL = 2
 enum { RANDOM = 1, MANUAL = 2 };
 
 /// @brief Точка входа в программу
@@ -139,13 +139,13 @@ void fillRandom(int* arr,const  size_t size) {
         arr[i] = (rand() % (end - start + 1)) + start;
 }
 
-void printArray(int* arr,const  size_t size) {
+void printArray(const int* arr,const  size_t size) {
     for (size_t i = 0; i < size; i++)
         printf("%d ", arr[i]);
 
 }
 
-int findMaxIndex(int* arr, const size_t size) {
+int findMaxIndex(const int* arr, const size_t size) {
     size_t maxI = 0;
     for (size_t i = 1; i < size; i++)
         if (arr[i] > arr[maxI])
@@ -167,7 +167,7 @@ int containsDigit1( int x) {
     return 0;
 }
 
-void insertMaxAfterOnes(int** arr, size_t* size) {
+void insertMaxAfterOnes(int** arr,size_t* size) {
     int maxVal = (*arr)[findMaxIndex(*arr, *size)];
 
     for (size_t i = 0; i < *size; i++) {
