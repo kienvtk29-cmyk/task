@@ -1,19 +1,60 @@
-﻿#include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 
-void printArray(int* arr, size_t size);
-void fillArray(int* arr, size_t size);
-void fillRandom(int* arr, size_t size);
-void replaceMaxWithOpposite(int* arr, size_t size);
-int containsDigit1(int x);
+/// @brief Выводит массив на экран
+/// @param arr Массив чисел
+/// @param size Размер массива
+void printArray(int* arr, const size_t size);
+
+/// @brief Заполняет массив вручную
+/// @param arr Массив чисел
+/// @param size Размер массива
+void fillArray(int* arr, const size_t size);
+
+/// @brief Заполняет массив случайными числами в заданном диапазоне
+/// @param arr Массив чисел
+/// @param size Размер массива
+void fillRandom(int* arr, const size_t size);
+
+/// @brief Заменяет максимальный элемент массива на противоположный по знаку
+/// @param arr Массив чисел
+/// @param size Размер массива
+void replaceMaxWithOpposite(int* arr, const size_t size);
+
+/// @brief Проверяет, содержит ли число цифру 1
+/// @param x Число для проверки
+/// @return 1, если содержит цифру 1, иначе 0
+int containsDigit1(const int x);
+
+/// @brief Вставляет максимальный элемент после всех элементов, содержащих цифру 1
+/// @param arr Указатель на массив чисел
+/// @param size Указатель на размер массива (может изменяться)
 void insertMaxAfterOnes(int** arr, size_t* size);
-int findMaxIndex(int* arr, size_t size);
-void makeArrayA(int* A, int* C, size_t size);
+
+/// @brief Находит индекс максимального элемента массива
+/// @param arr Массив чисел
+/// @param size Размер массива
+/// @return Индекс максимального элемента
+int findMaxIndex(int* arr, const size_t size);
+
+/// @brief Создаёт массив A на основе массива C с изменениями в первых 10 элементах
+/// @param A Массив для заполнения
+/// @param C Исходный массив
+/// @param size Размер массива
+void makeArrayA(int* A, int* C, const size_t size);
+
+/// @brief Считывает размер массива с клавиатуры
+/// @return Значение размера
 size_t getSize();
+
+/// @brief Считывает целое число с клавиатуры
+/// @return Введённое число
 int Value();
 
 enum { RANDOM = 1, MANUAL = 2 };
 
+/// @brief Точка входа в программу
+/// @return 0 при успешном завершении программы
 int main()
 {
     printf("Enter array size: ");
@@ -25,7 +66,7 @@ int main()
         return 0;
     }
 
-    printf("Choose: 1 = RANDOM, 2 = MANUAL\n");
+    printf("choose RANDOM press %d, MANUAL press %d: ", RANDOM, MANUAL);
     int choice = Value();
 
     switch (choice) {
@@ -82,14 +123,14 @@ size_t getSize() {
     return v;
 }
 
-void fillArray(int* arr, size_t size) {
+void fillArray(int* arr,const size_t size) {
     for (size_t i = 0; i < size; i++) {
         printf("Enter number: ");
         arr[i] = Value();
     }
 }
 
-void fillRandom(int* arr, size_t size) {
+void fillRandom(int* arr,const  size_t size) {
     printf("start = ");
     int start = Value();
     printf("end = ");
@@ -98,13 +139,13 @@ void fillRandom(int* arr, size_t size) {
         arr[i] = (rand() % (end - start + 1)) + start;
 }
 
-void printArray(int* arr, size_t size) {
+void printArray(int* arr,const  size_t size) {
     for (size_t i = 0; i < size; i++)
         printf("%d ", arr[i]);
 
 }
 
-int findMaxIndex(int* arr, size_t size) {
+int findMaxIndex(int* arr, const size_t size) {
     size_t maxI = 0;
     for (size_t i = 1; i < size; i++)
         if (arr[i] > arr[maxI])
@@ -112,12 +153,12 @@ int findMaxIndex(int* arr, size_t size) {
     return maxI;
 }
 
-void replaceMaxWithOpposite(int* arr, size_t size) {
+void replaceMaxWithOpposite(int* arr,const size_t size) {
     int idx = findMaxIndex(arr, size);
     arr[idx] = -arr[idx];
 }
 
-int containsDigit1(int x) {
+int containsDigit1( int x) {
     x = abs(x);
     while (x > 0) {
         if (x % 10 == 1) return 1;
@@ -149,7 +190,7 @@ void insertMaxAfterOnes(int** arr, size_t* size) {
     }
 }
 
-void makeArrayA(int* A, int* C, size_t size) {
+void makeArrayA(int* A, int* C,const  size_t size) {
     for (size_t i = 0; i < size; i++) {
         if (i < 10) {
             if (i % 2 == 0)
