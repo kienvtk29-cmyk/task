@@ -47,7 +47,7 @@ int findMin(const int* arr,const size_t size);
 // @param maxindex Индекс максимального элемента
 // @param arr Массив чисел
 // @param size Размер массива
-void replaceN(const int minindex, const int maxindex, int* arr,const  size_t size);
+void replaceN(const int minindex, const int maxindex, int* copyArr,const  size_t size);
 
 // @brief Считывает размер массива с клавиатуры
 // @return Значение размера
@@ -95,7 +95,6 @@ int main()
     }
 
     printArray(arr, size);
-    void find36(const int* arr, const size_t size);
  
 
 
@@ -107,7 +106,9 @@ int main()
     int minindex = findMin(arr, size);
     int maxindex = findMax(arr, size);
     printf("Min index = %d, Max index = %d\n", minindex, maxindex);
-    replaceN(minindex, maxindex, arr, size);
+    int* copyArr = copyArray(arr, size);
+    replaceN(minindex, maxindex, copyArr, size);
+    free(copyArr);
     free(arr);
     return 0;
 }
@@ -168,8 +169,7 @@ int findeven(const int* arr, const size_t size)
     for (size_t i = 0; i < size; i++)
         if (arr[i] < 0 && arr[i] % 2 == 0)
             sum += arr[i];
-        else
-            printf("there is no negative even number");
+
     return sum;
 }
 
@@ -179,8 +179,7 @@ void find36(const int* arr, const size_t size)
     for (size_t i = 0; i < size; i++)
         if (arr[i] % 6 == 0)
             printf("%d ", arr[i]);
-        else
-            printf("there are no numbers divisiable by 6");
+
     printf("\n");
 }
 
@@ -209,16 +208,15 @@ int findMin(const int* arr,const size_t size)
     return minindex;
 }
 
-void replaceN(const int minindex,const int maxindex, int* copyArr,const  size_t size)
+void replaceN(const int minindex,const int maxindex, int* copyArray,const  size_t size)
 {
     for (size_t i = minindex+1; i < maxindex; i++)
-        copyArr[i] = 0;
+        copyArray[i] = 0;
 
     printf("Array after replacement: ");
-    printArray(copyArr, size);
+    printArray(copyArray, size);
 }
 void checkarr(const int* arr,const size_t size) {
-    int* arr = (int*)malloc(size * sizeof(int));
     if (arr == NULL)
     {
         printf("Memory error\n");
