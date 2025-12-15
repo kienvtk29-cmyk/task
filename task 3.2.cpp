@@ -2,20 +2,52 @@
 #include<math.h>
 #include <stdlib.h>
 
-int getValue();
-double getDouble();
-double getSumN(const int n);
-double getSumE(const double e);
-double getRecurent(const int i);
+/**
+ * @brief Проверяет, что значение положительное
+ * @param value Значение для проверки
+ * @note Если value <= 0, программа завершает работу
+ */
 void checkPositive(const double value);
-void checkPositive(const double value) 
-{
-	if (value <= 0) 
-	{
-		printf("error \n");
-		exit(1);
-	}
-}
+
+/**
+ * @brief Считывает целое число с клавиатуры
+ * @return Введённое значение типа int
+ * @note Если ввод некорректен, программа завершает работу
+ */
+int getValue();
+
+/**
+ * @brief Считывает число типа double с клавиатуры
+ * @return Введённое значение типа double
+ * @note Если ввод некорректен, программа завершает работу
+ */
+double getDouble();
+
+/**
+ * @brief Вычисляет сумму первых n членов последовательности
+ * @param n Количество членов последовательности
+ * @return Сумма первых n членов
+ */
+double getSumN(const int n);
+
+/**
+ * @brief Вычисляет сумму членов последовательности, пока абсолютное значение текущего члена больше e
+ * @param e Пороговое значение
+ * @return Сумма членов последовательности, удовлетворяющих условию
+ */
+double getSumE(const double e);
+
+/**
+ * @brief Вычисляет рекуррентный множитель для последовательности
+ * @param i Номер члена последовательности
+ * @return Значение рекуррентного множителя
+ */
+double getRecurent(const int i);
+
+/**
+ * @brief Точка входа в программу
+ * @return 0, если программа выполнена корректно
+ */
 int main()
 {
 	printf("type n:");
@@ -25,9 +57,17 @@ int main()
 	double e = getDouble();
 	checkPositive(e);
 	printf("sum %d number of sequences = %.4lf\n", n, getSumN(n));
-	printf("sum of sequences more than number e = %.lf", e, getSumE(e));
+	printf("sum of sequences more than number e = %lf is %lf", e, getSumE(e));
 
 	return 0;
+}
+void checkPositive(const double value)
+{
+	if (value <= 0)
+	{
+		printf("error \n");
+		exit(1);
+	}
 }
 int getValue()
 
