@@ -54,7 +54,7 @@ void checkPositive(const int value);
 /// @brief Считывает целое число с клавиатуры
 /// @return Введенное значение
 int inputValue();
-
+// @brief Позволяет пользователям выбрать RANDOM = 1 или MANUAL = 2
 enum { RANDOM = 1, MANUAL = 2 };
 
 /// @brief Точка входа в программу
@@ -221,3 +221,4 @@ int** removeOddPositiveColumns(int** a, int n, int m, int* newM) {
 
     return newMatrix;
 }
+
