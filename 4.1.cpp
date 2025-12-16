@@ -107,6 +107,7 @@ int main()
     int maxindex = findMax(arr, size);
     printf("Min index = %d, Max index = %d\n", minindex, maxindex);
     int* copyArr = copyArray(arr, size);
+    
     replaceN(minindex, maxindex, copyArr, size);
     free(copyArr);
     free(arr);
@@ -147,6 +148,7 @@ void fillArray(int* arr, const size_t size)
 void printArray(const int* arr, const size_t size)
 {
     printf("Array: ");
+    checkarr(arr);
     for (size_t i = 0; i < size; i++)
         printf("%d ", arr[i]);
     printf("\n");
@@ -158,7 +160,7 @@ void fillRandom(int* arr, const size_t size)
     int start = Value();
     printf("end: ");
     int end = Value();
-
+    checkarr(arr);
     for (size_t i = 0; i < size; i++)
         arr[i] = (rand() % (end - start + 1)) + start;
 }
@@ -166,6 +168,7 @@ void fillRandom(int* arr, const size_t size)
 int findeven(const int* arr, const size_t size)
 {
     int sum = 0;
+    checkarr(arr);
     for (size_t i = 0; i < size; i++)
         if (arr[i] < 0 && arr[i] % 2 == 0)
             sum += arr[i];
@@ -176,6 +179,7 @@ int findeven(const int* arr, const size_t size)
 void find36(const int* arr, const size_t size)
 {
     printf("Numbers divisible by 6: ");
+    checkarr(arr);
     for (size_t i = 0; i < size; i++)
         if (arr[i] % 6 == 0)
             printf("%d ", arr[i]);
@@ -186,7 +190,7 @@ void find36(const int* arr, const size_t size)
 int findMax(const int* arr,const size_t size)
 {
     int maxindex = 0;
-
+    checkarr(arr);
     for (size_t i = 1; i < size; i++)
     {
         if (arr[i] > arr[maxindex])
@@ -198,6 +202,7 @@ int findMax(const int* arr,const size_t size)
 int findMin(const int* arr,const size_t size)
 {
     int minindex = 0;
+    checkarr(arr);
 
     for (size_t i = 1; i < size; i++)
     {
@@ -212,11 +217,12 @@ void replaceN(const int minindex,const int maxindex, int* copyArray,const  size_
 {
     for (size_t i = minindex+1; i < maxindex; i++)
         copyArray[i] = 0;
+        checkarr(copyArray);
 
     printf("Array after replacement: ");
     printArray(copyArray, size);
 }
-void checkarr(const int* arr,const size_t size) {
+void checkarr(const int* arr) {
     if (arr == NULL)
     {
         printf("Memory error\n");
@@ -226,6 +232,7 @@ void checkarr(const int* arr,const size_t size) {
 int* copyArray(const int* arr, const size_t size)
 {
     int* copyArr = (int*)malloc(sizeof(int) * size);
+    checkarr(copyArr);
     for (size_t i = 0; i < size; i++)
     {
         copyArr[i] = arr[i];
