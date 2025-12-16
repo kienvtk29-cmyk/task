@@ -138,6 +138,7 @@ size_t getSize()
 
 void fillArray(int* arr, const size_t size)
 {
+    checkarr(arr);
     for (size_t i = 0; i < size; i++)
     {
         printf("enter number: ");
@@ -216,9 +217,9 @@ int findMin(const int* arr,const size_t size)
 void replaceN(const int minindex,const int maxindex, int* copyArray,const  size_t size)
 {
     for (size_t i = minindex+1; i < maxindex; i++)
-        copyArray[i] = 0;
+       
         checkarr(copyArray);
-
+        copyArray[i] = 0;
     printf("Array after replacement: ");
     printArray(copyArray, size);
 }
@@ -231,6 +232,7 @@ void checkarr(const int* arr) {
 }
 int* copyArray(const int* arr, const size_t size)
 {
+    checkarr(arr);
     int* copyArr = (int*)malloc(sizeof(int) * size);
     checkarr(copyArr);
     for (size_t i = 0; i < size; i++)
@@ -239,3 +241,4 @@ int* copyArray(const int* arr, const size_t size)
     }
     return copyArr;
 }
+
