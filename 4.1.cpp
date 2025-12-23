@@ -14,45 +14,37 @@ int* copyArray(const int* arr, const size_t size);
 // @param size Размер массива
 // @return Сумма отрицательных чётных чисел
 int findeven(const int* arr,const size_t size);
-
 // @brief Выводит массив на экран
 // @param arr Массив чисел
 // @param size Размер массива
 void printArray(const int* arr,const size_t size);
-
 // @brief Заполняет массив вручную, вводя значения с клавиатуры
 // @param arr Массив чисел
 // @param size Размер массива
 void fillArray(int* arr,const size_t size);
-
 // @brief Заполняет массив случайными числами в заданном диапазоне
 // @param arr Массив чисел
 // @param size Размер массива
 void fillRandom(int* arr,const size_t size);
-
 // @brief Находит индекс максимального элемента массива
 // @param arr Массив чисел
 // @param size Размер массива
 // @return Индекс максимального элемента
 int findMax(const int* arr,const size_t size);
-
 // @brief Находит индекс минимального элемента массива
 // @param arr Массив чисел
 // @param size Размер массива
 // @return Индекс минимального элемента
 int findMin(const int* arr,const size_t size);
-
 // @brief Заменяет элементы массива между минимальным и максимальным индексом на 0
 // @param minindex Индекс минимального элемента
 // @param maxindex Индекс максимального элемента
 // @param arr Массив чисел
 // @param size Размер массива
 void replaceN(const int minindex, const int maxindex, int* copyArr,const  size_t size);
-
 // @brief Считывает размер массива с клавиатуры
 // @return Значение размера
 size_t getSize();
-
 // @brief Считывает целое число с клавиатуры
 // @return Введённое число
 int Value();
@@ -62,19 +54,14 @@ int Value();
 void checkarr(const int* arr,const  size_t size);
 // @brief Позволяет пользователям выбрать RANDOM = 1 или MANUAL = 2
 enum { RANDOM = 1, MANUAL = 2 };
-
 // @brief Точка входа в программу
 // @return 0 при успешном завершении программы
 int main()
 {
-
-
     printf("enter array size: ");
     size_t size = getSize();
-
     int* arr = (int*)malloc(size * sizeof(int));
     checkarr(arr, size);
-
     printf("choose RANDOM press %d, MANUAL press %d: ", RANDOM, MANUAL);
     int choice = Value();
 
@@ -93,27 +80,19 @@ int main()
         free(arr);
         return 0;
     }
-
     printArray(arr, size);
- 
-
-
     find36(arr, size);
     int sum = findeven(arr, size);
-    printf("Sum of negative even numbers: %d\n", sum);
-
-    
+    printf("Sum of negative even numbers: %d\n", sum);  
     int minindex = findMin(arr, size);
     int maxindex = findMax(arr, size);
     printf("Min index = %d, Max index = %d\n", minindex, maxindex);
     int* copyArr = copyArray(arr, size);
-    
     replaceN(minindex, maxindex, copyArr, size);
     free(copyArr);
     free(arr);
     return 0;
 }
-
 int Value()
 {
     int value = 0;
@@ -138,7 +117,6 @@ size_t getSize()
 
 void fillArray(int* arr, const size_t size)
 {
-    checkarr(arr);
     for (size_t i = 0; i < size; i++)
     {
         printf("enter number: ");
@@ -216,10 +194,11 @@ int findMin(const int* arr,const size_t size)
 
 void replaceN(const int minindex,const int maxindex, int* copyArray,const  size_t size)
 {
+    checkarr(copyArray);
     for (size_t i = minindex+1; i < maxindex; i++)
-       
-        checkarr(copyArray);
         copyArray[i] = 0;
+        
+
     printf("Array after replacement: ");
     printArray(copyArray, size);
 }
@@ -232,13 +211,12 @@ void checkarr(const int* arr) {
 }
 int* copyArray(const int* arr, const size_t size)
 {
-    checkarr(arr);
     int* copyArr = (int*)malloc(sizeof(int) * size);
     checkarr(copyArr);
     for (size_t i = 0; i < size; i++)
     {
+        
         copyArr[i] = arr[i];
     }
     return copyArr;
 }
-
