@@ -1,7 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-
+/// @brief Копировать матрицу
+/// @param matrix Исходная матрица
+/// @param n Количество строк
+/// @param m Количество столбцов
+/// @return Указатель на новую матрицу
+int** copyMatrix(int** matrix, const int n, const int m);
+// @brief Проверьте, выделена ли память для матрицы.
+// @param arr Массив чисел
+// @param size Размер массива
+void checkarr(const int* arr);
 /// @brief Создает динамическую матрицу размером n×m
 /// @param n Количество строк
 /// @param m Количество столбцов
@@ -85,7 +93,7 @@ int main() {
         printf("Invalid choice.\n");
         return 1;
     }
-
+    int** matrixCopy = copyMatrix(matrix, n, m);
     printf("Original matrix:\n");
     printMatrix(matrix, n, m);
     replaceMinWithZero(matrix, n, m);
@@ -93,13 +101,15 @@ int main() {
     printMatrix(matrix, n, m);
     int newM = countValidColumns(matrix, n, m);
     matrix = removeOddPositiveColumns(matrix, n, m, &newM);
-
     printf("Matrix after removing columns with odd positive numbers:\n");
     printMatrix(matrix, n, newM);
     for (size_t i = 0; i < n; i++)
         free(matrix[i]);
 
     free(matrix);
+    for (int i = 0; i < n; i++)
+        free(matrixCopy[i]);
+    free(matrixCopy);
     return 0;
 }
 void checkPositive(const int value)
@@ -162,6 +172,7 @@ void fillMatrixRandom(int** a, int n, int m) {
 }
 
 void printMatrix(int** a, int n, int m) {
+    checkarr((int*)a);
     for (size_t i = 0; i < n; i++) {
         for (size_t j = 0; j < m; j++)
             printf("%5d ", a[i][j]);
@@ -169,23 +180,25 @@ void printMatrix(int** a, int n, int m) {
     }
 }
 
-void replaceMinWithZero(int** a, int n, int m) {
+void replaceMinWithZero(int** copyMatrix, int n, int m) {
+    checkarr((int*)copyMatrix);
     for (size_t  i = 0; i < n; i++) {
         int minIndex = 0;
         for (size_t j = 1; j < m; j++)
-            if (a[i][j] < a[i][minIndex])
+            if (copyMatrix[i][j] < copyMatrix[i][minIndex])
                 minIndex = j;
 
-        a[i][minIndex] = 0;
+        copyMatrix[i][minIndex] = 0;
     }
 }
 
-int countValidColumns(int** a, int n, int m) {
+int countValidColumns(int** copyMatrix, int n, int m) {
+    checkarr((int*)copyMatrix);
     int count = 0;
     for (size_t col = 0; col < m; col++) {
         int ok = 1;
         for (size_t row = 0; row < n; row++) {
-            if (a[row][col] > 0 && a[row][col] % 2 == 1) {
+            if (copyMatrix[row][col] > 0 && copyMatrix[row][col] % 2 == 1) {
                 ok = 0;
                 break;
             }
@@ -195,30 +208,57 @@ int countValidColumns(int** a, int n, int m) {
     return count;
 }
 
-int** removeOddPositiveColumns(int** a, int n, int m, int* newM) {
-    int validCols = countValidColumns(a, n, m);
+int** removeOddPositiveColumns(int** copyMatrix, int n, int m, int* newM) {
+    checkarr((int*)copyMatrix);
+    int validCols = countValidColumns(copyMatrix, n, m);
     int** newMatrix = createMatrix(n, validCols);
 
     int colIndex = 0;
     for (size_t col = 0; col < m; col++) {
         int ok = 1;
         for (size_t row = 0; row < n; row++)
-            if (a[row][col] > 0 && a[row][col] % 2 == 1)
+            if (copyMatrix[row][col] > 0 && copyMatrix[row][col] % 2 == 1)
                 ok = 0;
 
         if (ok) {
         
             for (size_t  row = 0; row < n; row++)
-                newMatrix[row][colIndex] = a[row][col];
+                newMatrix[row][colIndex] = copyMatrix[row][col];
             colIndex++;
         }
     }
 
     *newM = validCols;
     for (int i = 0; i < n; i++)
-        free(a[i]);
-    free(a);
+        free(copyMatrix[i]);
+    free(copyMatrix);
 
     return newMatrix;
 }
 
+void checkarr(const int* arr) {
+    if (arr == NULL)
+    {
+        printf("Memory error\n");
+        exit(1);
+    }
+}
+int** copyMatrix(int** matrix, const int n, const int m) {
+    checkarr((int*)copyMatrix);
+    if (matrix == NULL) {
+        printf("Source matrix is NULL\n");
+        exit(1);
+    }
+
+    int** Nmatrix = createMatrix(n, m);
+    if (Nmatrix== NULL) {
+        printf("Failed to allocate memory for copied matrix\n");
+        exit(1);
+    }
+
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            Nmatrix[i][j] = matrix[i][j];
+
+    return Nmatrix;
+}
