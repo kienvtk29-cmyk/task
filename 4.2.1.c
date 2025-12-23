@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+// @brief Проверьте, выделена ли память для матрицы.
+// @param arr Массив чисел
+// @param size Размер массива
+void checkarr(const int* arr);
 /// @brief Выводит массив на экран
 /// @param arr Массив чисел
 /// @param size Размер массива
@@ -19,7 +22,7 @@ void fillRandom(int* arr, const size_t size);
 /// @brief Заменяет максимальный элемент массива на противоположный по знаку
 /// @param arr Массив чисел
 /// @param size Размер массива
-void replaceMaxWithOpposite(int* arr, const size_t size);
+void replaceMaxWithOpposite(int* copyArray, const size_t size);
 
 /// @brief Проверяет, содержит ли число цифру 1
 /// @param x Число для проверки
@@ -29,7 +32,7 @@ int containsDigit1(int x);
 /// @brief Вставляет максимальный элемент после всех элементов, содержащих цифру 1
 /// @param arr Указатель на массив чисел
 /// @param size Указатель на размер массива (может изменяться)
-void insertMaxAfterOnes(int** arr,size_t* size);
+int* insertMaxAfterOnes(int* copyArray, size_t* size);
 
 /// @brief Находит индекс максимального элемента массива
 /// @param arr Массив чисел
@@ -41,8 +44,12 @@ int findMaxIndex(const int* arr, const size_t size);
 /// @param A Массив для заполнения
 /// @param C Исходный массив
 /// @param size Размер массива
-void makeArrayA(int* A, int* C, const size_t size);
-
+void makeArrayA(int* A,const int* C, const size_t size);
+// @brief создать матрицу копирования
+// @param arr Массив чисел
+// @param size Размер массива
+// @return Индекс минимального элемента
+int* copyArray(const int* arr, const size_t size);
 /// @brief Считывает размер массива с клавиатуры
 /// @return Значение размера
 size_t getSize();
@@ -83,12 +90,13 @@ int main()
     }
     printf("Original array:\n");
     printArray(arr, size);
+    int* copyArr = copyArray(arr, size);
     printf("\nReplace max element with opposite sign:\n");
-    replaceMaxWithOpposite(arr, size);
-    printArray(arr, size);
+    replaceMaxWithOpposite(copyArr, size);
+    printArray(copyArr, size);
     printf("\nInsert max after all elements that contain digit 1:\n");
-    insertMaxAfterOnes(&arr, &size);
-    printArray(arr, size);
+    copyArr  = insertMaxAfterOnes(copyArr, &size);
+    printArray(copyArr, size);
     printf("\nCreate array A from C:\n");
     int* A = malloc(size * sizeof(int));
     if (A == NULL) {
@@ -96,10 +104,9 @@ int main()
         free(arr);
         return 0;
     }
-
-    makeArrayA(A, arr, size);
+    makeArrayA(A, copyArr, size);
     printArray(A, size);
-
+    free(copyArr);
     free(A);
     free(arr);
     return 0;
@@ -124,6 +131,7 @@ size_t getSize() {
 }
 
 void fillArray(int* arr,const size_t size) {
+    checkarr(arr);
     for (size_t i = 0; i < size; i++) {
         printf("Enter number: ");
         arr[i] = Value();
@@ -131,6 +139,7 @@ void fillArray(int* arr,const size_t size) {
 }
 
 void fillRandom(int* arr,const  size_t size) {
+    checkarr(arr);
     printf("start = ");
     int start = Value();
     printf("end = ");
@@ -140,22 +149,25 @@ void fillRandom(int* arr,const  size_t size) {
 }
 
 void printArray(const int* arr,const  size_t size) {
+    checkarr(arr);
     for (size_t i = 0; i < size; i++)
         printf("%d ", arr[i]);
 
 }
 
-int findMaxIndex(const int* arr, const size_t size) {
+int findMaxIndex(const int* copyArray, const size_t size) {
+    checkarr(copyArray);
     size_t maxI = 0;
     for (size_t i = 1; i < size; i++)
-        if (arr[i] > arr[maxI])
+        if (copyArray[i] > copyArray[maxI])
             maxI = i;
     return maxI;
 }
 
-void replaceMaxWithOpposite(int* arr,const size_t size) {
-    int idx = findMaxIndex(arr, size);
-    arr[idx] = -arr[idx];
+void replaceMaxWithOpposite(int* copyArray,const size_t size) {
+    checkarr(copyArray);
+    int idx = findMaxIndex(copyArray, size);
+    copyArray[idx] = -copyArray[idx];
 }
 
 int containsDigit1( int x) {
@@ -167,30 +179,35 @@ int containsDigit1( int x) {
     return 0;
 }
 
-void insertMaxAfterOnes(int** arr,size_t* size) {
-    int maxVal = (*arr)[findMaxIndex(*arr, *size)];
+int* insertMaxAfterOnes(int* copyArray, size_t* size) {
+    checkarr(copyArray);
+    int maxVal = copyArray[findMaxIndex(copyArray, *size)];
 
     for (size_t i = 0; i < *size; i++) {
-        if (containsDigit1((*arr)[i])) {
+        if (containsDigit1(copyArray[i])) {
 
-            *arr = realloc(*arr, (*size + 1) * sizeof(int));
-            if (!*arr) {
+            int* tmp = realloc(copyArray, (*size + 1) * sizeof(int));
+            if (!tmp) {
+                free(copyArray);
                 printf("Memory error\n");
                 exit(1);
             }
+            copyArray = tmp;
 
             for (size_t j = *size; j > i + 1; j--)
-                (*arr)[j] = (*arr)[j - 1];
+                copyArray[j] = copyArray[j - 1];
 
-            (*arr)[i + 1] = maxVal;
-
+            copyArray[i + 1] = maxVal;
             (*size)++;
             i++;
         }
     }
+    return copyArray;
 }
 
-void makeArrayA(int* A, int* C,const  size_t size) {
+void makeArrayA(int* A,const int* C,const  size_t size) {
+    checkarr(A);
+    checkarr(C);
     for (size_t i = 0; i < size; i++) {
         if (i < 10) {
             if (i % 2 == 0)
@@ -201,5 +218,23 @@ void makeArrayA(int* A, int* C,const  size_t size) {
         else {
             A[i] = C[i];
         }
+    }
+}
+int* copyArray(const int* arr, const size_t size)
+{
+    int* copyArr = (int*)malloc(sizeof(int) * size);
+    checkarr(copyArr);
+    for (size_t i = 0; i < size; i++)
+    {
+
+        copyArr[i] = arr[i];
+    }
+    return copyArr;
+}
+void checkarr(const int* arr) {
+    if (arr == NULL)
+    {
+        printf("Memory error\n");
+        exit(1);
     }
 }
