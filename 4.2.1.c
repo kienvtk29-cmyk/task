@@ -68,10 +68,7 @@ int main()
     size_t size = getSize();
 
     int* arr = malloc(size * sizeof(int));
-    if (arr == NULL) {
-        printf("Memory error\n");
-        return 0;
-    }
+    checkarr(arr);
 
     printf("choose RANDOM press %d, MANUAL press %d: ", RANDOM, MANUAL);
     int choice = Value();
@@ -99,11 +96,7 @@ int main()
     printArray(copyArr, size);
     printf("\nCreate array A from C:\n");
     int* A = malloc(size * sizeof(int));
-    if (A == NULL) {
-        printf("Memory error\n");
-        free(arr);
-        return 0;
-    }
+    checkarr(A);
     makeArrayA(A, copyArr, size);
     printArray(A, size);
     free(copyArr);
@@ -206,8 +199,8 @@ int* insertMaxAfterOnes(int* copyArray, size_t* size) {
 }
 
 void makeArrayA(int* A,const int* C,const  size_t size) {
-    checkarr(A);
     checkarr(C);
+    checkarr(A);
     for (size_t i = 0; i < size; i++) {
         if (i < 10) {
             if (i % 2 == 0)
