@@ -53,7 +53,7 @@ int countValidColumns(int** a, const int n, const int m);
 /// @param m Количество столбцов
 /// @param newM Указатель на новый размер столбцов
 /// @return Указатель на новую матрицу
-int** removeOddPositiveColumns(int** a, const int n, const int m, int* newM);
+int** removeOddPositiveColumns(int** a, const int n, const int m, int newM);
 
 /// @brief Проверяет, что значение положительное
 /// @param value Проверяемое значение
@@ -100,7 +100,7 @@ int main() {
     printf("Matrix after replacing minimum in each row with 0:\n");
     printMatrix(matrix, n, m);
     int newM = countValidColumns(matrix, n, m);
-    matrix = removeOddPositiveColumns(matrix, n, m, &newM);
+    matrix = removeOddPositiveColumns(matrix, n, m, newM);
     printf("Matrix after removing columns with odd positive numbers:\n");
     printMatrix(matrix, n, newM);
     for (size_t i = 0; i < n; i++)
@@ -152,6 +152,7 @@ int** createMatrix(int n, int m) {
 }
 
 void fillMatrixManual(int** a, int n, int m) {
+    checkarr((int*) a);
     printf("Enter %d×%d elements:\n", n, m);
     for (size_t i = 0; i < n; i++)
         for (size_t j = 0; j < m; j++) {
@@ -161,6 +162,7 @@ void fillMatrixManual(int** a, int n, int m) {
 }
 
 void fillMatrixRandom(int** a, int n, int m) {
+    checkarr((int*)a);
     printf("Enter random range start: ");
     int s = inputValue();
     printf("Enter random range end: ");
@@ -208,7 +210,7 @@ int countValidColumns(int** copyMatrix, int n, int m) {
     return count;
 }
 
-int** removeOddPositiveColumns(int** copyMatrix, int n, int m, int* newM) {
+int** removeOddPositiveColumns(int** copyMatrix, int n, int m, int newM) {
     checkarr((int*)copyMatrix);
     int validCols = countValidColumns(copyMatrix, n, m);
     int** newMatrix = createMatrix(n, validCols);
@@ -228,8 +230,8 @@ int** removeOddPositiveColumns(int** copyMatrix, int n, int m, int* newM) {
         }
     }
 
-    *newM = validCols;
-    for (int i = 0; i < n; i++)
+    newM = validCols;
+    for (size_t i = 0; i < n; i++)
         free(copyMatrix[i]);
     free(copyMatrix);
 
@@ -256,7 +258,7 @@ int** copyMatrix(int** matrix, const int n, const int m) {
         exit(1);
     }
 
-    for (int i = 0; i < n; i++)
+    for (size_t i = 0; i < n; i++)
         for (int j = 0; j < m; j++)
             Nmatrix[i][j] = matrix[i][j];
 
