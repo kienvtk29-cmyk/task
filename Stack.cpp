@@ -1,85 +1,77 @@
 #include "Stack.h"
+
 #include <sstream>
 #include <stdexcept>
 
-
-void Stack::resize(size_t newCapacity)
-{
-    int* newData = new int[newCapacity];
-
-    for (size_t i = 0; i < size; i++)
-    {
-        newData[i] = data[i];
-    }
-
-    delete[] data;
-    data = newData;
-    capacity = newCapacity;
-}
-
+//
+// Конструктор по умолчанию
+//
 Stack::Stack()
 {
-    capacity = 4;
     size = 0;
-    data = new int[capacity];
 }
 
+//
+// Конструктор со списком инициализации
+//
 Stack::Stack(std::initializer_list<int> list)
 {
-    capacity = list.size() > 4 ? list.size() : 4;
-    size = list.size();
-
-    data = new int[capacity];
-
-    size_t index = 0;
+    size = 0;
 
     for (int value : list)
     {
-        data[index++] = value;
+        if (size < 4)
+        {
+            data[size++] = value;
+        }
     }
 }
 
+//
+// Конструктор копирования
+//
 Stack::Stack(const Stack& other)
 {
     size = other.size;
-    capacity = other.capacity;
 
-    data = new int[capacity];
-
-    for (size_t i = 0; i < size; i++)
+    for (int i = 0; i < size; i++)
     {
         data[i] = other.data[i];
     }
 }
 
+//
+// Конструктор перемещения
+//
 Stack::Stack(Stack&& other) noexcept
 {
-    data = other.data;
     size = other.size;
-    capacity = other.capacity;
 
-    other.data = nullptr;
+    for (int i = 0; i < size; i++)
+    {
+        data[i] = other.data[i];
+    }
+
     other.size = 0;
-    other.capacity = 0;
 }
 
+//
+// Деструктор
+//
 Stack::~Stack()
 {
-    delete[] data;
 }
 
+//
+// Оператор копирующего присваивания
+//
 Stack& Stack::operator=(const Stack& other)
 {
     if (this != &other)
     {
-        delete[] data;
-
         size = other.size;
-        capacity = other.capacity;
 
-        data = new int[capacity];
-
-        for (size_t i = 0; i < size; i++)
+        for (int i = 0; i < size; i++)
         {
             data[i] = other.data[i];
         }
@@ -88,34 +80,42 @@ Stack& Stack::operator=(const Stack& other)
     return *this;
 }
 
+//
+// Оператор перемещающего присваивания
+//
 Stack& Stack::operator=(Stack&& other) noexcept
 {
     if (this != &other)
     {
-        delete[] data;
-
-        data = other.data;
         size = other.size;
-        capacity = other.capacity;
 
-        other.data = nullptr;
+        for (int i = 0; i < size; i++)
+        {
+            data[i] = other.data[i];
+        }
+
         other.size = 0;
-        other.capacity = 0;
     }
 
     return *this;
 }
 
+//
+// Добавление элемента в стек
+//
 void Stack::push(int value)
 {
-    if (size == capacity)
+    if (size >= 4)
     {
-        resize(capacity * 2);
+        throw std::out_of_range("Stack is full");
     }
 
     data[size++] = value;
 }
 
+//
+// Удаление верхнего элемента
+//
 int Stack::pop()
 {
     if (empty())
@@ -126,6 +126,9 @@ int Stack::pop()
     return data[--size];
 }
 
+//
+// Получение верхнего элемента
+//
 int Stack::peek() const
 {
     if (empty())
@@ -136,27 +139,36 @@ int Stack::peek() const
     return data[size - 1];
 }
 
+//
+// Проверка на пустоту
+//
 bool Stack::empty() const
 {
     return size == 0;
 }
 
-size_t Stack::getSize() const
+//
+// Получение количества элементов
+//
+int Stack::getSize() const
 {
     return size;
 }
 
+//
+// Преобразование содержимого стека в строку
+//
 std::string Stack::toString() const
 {
     std::stringstream ss;
 
     ss << "[";
 
-    for (size_t i = 0; i < size; i++)
+    for (int i = 0; i < size; i++)
     {
         ss << data[i];
 
-        if (i + 1 < size)
+        if (i < size - 1)
         {
             ss << ", ";
         }
@@ -167,12 +179,20 @@ std::string Stack::toString() const
     return ss.str();
 }
 
+//
+// Перегрузка оператора <<
+// Добавление элемента
+//
 Stack& operator<<(Stack& stack, int value)
 {
     stack.push(value);
     return stack;
 }
 
+//
+// Перегрузка оператора >>
+// Извлечение элемента
+//
 Stack& operator>>(Stack& stack, int& value)
 {
     value = stack.pop();
