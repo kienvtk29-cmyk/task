@@ -1,54 +1,74 @@
-﻿#include <iostream> 
+#include <iostream>
 #include "Stack.h"
+
+using namespace std;
+
 int main()
 {
-    // Создание стека с начальными элементами 10, 20 и 30
+    cout << "===== STACK DEMO =====" << endl;
+
+    // Создание стека через список инициализации
     Stack stack{ 10, 20, 30 };
 
-    // Вывод содержимого стека
-    std::cout << "Initial stack: "
+    cout << "Начальный стек: "
         << stack.toString()
-        << std::endl;
+        << endl;
 
-    // Добавление элемента 40 на вершину стека
+    // Добавление элемента
     stack.push(40);
 
-    std::cout << "After push(40): "
+    cout << "После push(40): "
         << stack.toString()
-        << std::endl;
+        << endl;
 
-    // Просмотр элемента на вершине стека без его удаления
-    std::cout << "Peek: "
+    // Получение верхнего элемента
+    cout << "Верхний элемент: "
         << stack.peek()
-        << std::endl;
+        << endl;
 
+    // Извлечение элемента
     int value;
 
-    // Извлечение элемента с вершины стека
     stack >> value;
 
-    std::cout << "Popped value: "
+    cout << "Извлечённый элемент: "
         << value
-        << std::endl;
+        << endl;
 
-    // Вывод состояния стека после извлечения элемента
-    std::cout << "Stack after pop: "
+    cout << "Стек после pop(): "
         << stack.toString()
-        << std::endl;
+        << endl;
 
-    // Добавление элементов 100 и 200 с помощью перегруженного оператора <<
-    stack << 100 << 200;
+    // Использование оператора <<
+    stack << 100;
 
-    std::cout << "After operator<< : "
+    cout << "После operator<< : "
         << stack.toString()
-        << std::endl;
+        << endl;
 
-    // Создание копии стека с помощью конструктора копирования
-    Stack copy = stack;
+    // Проверка конструктора копирования
+    Stack copy(stack);
 
-    std::cout << "Copied stack: "
+    cout << "Копия стека: "
         << copy.toString()
-        << std::endl;
+        << endl;
+
+    // Проверка оператора присваивания
+    Stack another;
+
+    another = stack;
+
+    cout << "После присваивания: "
+        << another.toString()
+        << endl;
+
+    cout << "Количество элементов: "
+        << stack.getSize()
+        << endl;
+
+    cout << "Стек пуст? "
+        << (stack.empty() ? "Да" : "Нет")
+        << endl;
 
     return 0;
 }
