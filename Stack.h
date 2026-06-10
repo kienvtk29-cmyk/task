@@ -3,41 +3,81 @@
 #include <string>
 #include <initializer_list>
 
+/*
+    Класс Stack реализует структуру данных "Стек".
+
+    Стек работает по принципу LIFO
+    (Last In, First Out) - последний вошёл, первый вышел.
+
+    Максимальное количество элементов: 4.
+*/
 class Stack
 {
 private:
-    int* data;
-    size_t size;
-    size_t capacity;
 
-    void resize(size_t newCapacity);
+    // Массив для хранения элементов стека
+    int data[4];
+
+    // Текущее количество элементов в стеке
+    int size;
 
 public:
-    // Constructors
+
+    // Конструктор по умолчанию
     Stack();
+
+    // Конструктор со списком инициализации
     Stack(std::initializer_list<int> list);
 
+    // Конструктор копирования
     Stack(const Stack& other);
+
+    // Конструктор перемещения
     Stack(Stack&& other) noexcept;
 
-    // Destructor
+    // Деструктор
     ~Stack();
 
-    // Assignment operators
+    // Оператор копирующего присваивания
     Stack& operator=(const Stack& other);
+
+    // Оператор перемещающего присваивания
     Stack& operator=(Stack&& other) noexcept;
 
-    // Stack operations
+    // Добавление элемента в вершину стека
     void push(int value);
+
+    // Удаление и возврат верхнего элемента
     int pop();
+
+    // Получение верхнего элемента без удаления
     int peek() const;
 
+    // Проверка на пустоту стека
     bool empty() const;
-    size_t getSize() const;
 
+    // Получение количества элементов
+    int getSize() const;
+
+    // Преобразование содержимого стека в строку
     std::string toString() const;
 
-    // Operators
+    /*
+        Перегрузка оператора <<
+        Добавляет элемент в стек.
+
+        Пример:
+        stack << 10;
+    */
     friend Stack& operator<<(Stack& stack, int value);
+
+    /*
+        Перегрузка оператора >>
+        Извлекает элемент из стека.
+
+        Пример:
+        int x;
+        stack >> x;
+    */
     friend Stack& operator>>(Stack& stack, int& value);
 };
