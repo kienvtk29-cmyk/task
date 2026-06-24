@@ -1,0 +1,69 @@
+#include<math.h>
+#include<stdio.h>
+#include<stdlib.h>
+
+/**
+ * @brief Считывает число типа double с клавиатуры
+ * @return Введённое значение
+ * @note Если ввод некорректен, программа завершает работу
+ */
+double getDouble();
+
+/**
+ * @brief Вычисляет значение функции A1 = a * x - log10(a * x)
+ * @param a Константа a
+ * @param x Значение x
+ * @return Значение функции A1
+ */
+double getA1(const double a, const double x);
+
+/**
+ * @brief Вычисляет значение функции A2 = a * x + log10(a * x)
+ * @param a Константа a
+ * @param x Значение x
+ * @return Значение функции A2
+ */
+double getA2(const double a, const double x);
+
+/**
+ * @brief Точка входа в программу
+ * @return 0, если программа выполнена корректно
+ */
+int main()
+{
+	double a = 1.5;
+	printf("enter A= ");
+	double x = getDouble();
+	
+	if((a*x)<=0)
+	{
+		printf("Incorrect input");
+		exit(1);
+	}
+	else if (0 < a * x && a*x < 1)
+	{	
+		printf("%lf", getA1(a, x));
+	
+
+	}
+	else {
+		printf("%lf", getA2(a, x));
+	}
+ }
+double getA1(const double a, const double x)
+{
+	return a * x - log10(a * x);
+}
+double getA2(const double a, const double x)
+{
+	return a * x + log10(a * x);
+}
+double getDouble() {
+	double value = 0;
+	if (!scanf_s("%lf", &value)) {
+		printf("error\n");
+		exit(1);
+	}
+	return value;
+}
+
