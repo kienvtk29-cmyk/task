@@ -1,0 +1,43 @@
+﻿#include<math.h>
+#include<stdio.h>
+/**
+* @brief рассчитывает значение А
+* @param x - значение x
+* @param y - значение y
+* @param z - значение z
+* @return рассчитанное значение А
+*/
+double getA(const double x, const double y, const double z);
+/**
+* @brief рассчитывает значение В
+* @param x - значение x
+* @param y - значение y
+* @param z - значение z
+* @return рассчитанное значение В
+*/
+double getB(const double x, const double y, const double z);
+
+/**
+* @brief точка входа в программу
+* @return 0, если программа выполнена корректно 
+*/
+int main()
+{
+	const double x = 0.5;
+	const double y = 0.05;
+	const double z = 0.7;
+	printf("%lf\n", getA(x, y, z));
+	printf("%lf", getB(x, y, z));
+	return 0;
+}
+double getA(const double x, const double y, const double z)
+{
+	return pow(x, 2) * (x + 1) / (y - pow(sin(x + z), 2));
+}
+double getB(const double x, const double y, const double z)
+{
+	return sqrt(x * y / z) + pow(cos((pow((x + y), 2))), 2);
+}
+
+
+
