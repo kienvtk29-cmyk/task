@@ -34,7 +34,7 @@ Stack::Stack(const Stack& other)
 {
     size = other.size;
 
-    for (int i = 0; i < size; i++)
+    for (size_t i = 0; i < size; i++)
     {
         data[i] = other.data[i];
     }
@@ -47,7 +47,7 @@ Stack::Stack(Stack&& other) noexcept
 {
     size = other.size;
 
-    for (int i = 0; i < size; i++)
+    for (size_t i = 0; i < size; i++)
     {
         data[i] = other.data[i];
     }
@@ -71,7 +71,7 @@ Stack& Stack::operator=(const Stack& other)
     {
         size = other.size;
 
-        for (int i = 0; i < size; i++)
+        for (size_t i = 0; i < size; i++)
         {
             data[i] = other.data[i];
         }
@@ -89,7 +89,7 @@ Stack& Stack::operator=(Stack&& other) noexcept
     {
         size = other.size;
 
-        for (int i = 0; i < size; i++)
+        for (size_t i = 0; i < size; i++)
         {
             data[i] = other.data[i];
         }
@@ -164,7 +164,7 @@ std::string Stack::toString() const
 
     ss << "[";
 
-    for (int i = 0; i < size; i++)
+    for (size_t i = 0; i < size; i++)
     {
         ss << data[i];
 
