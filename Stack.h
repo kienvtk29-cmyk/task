@@ -25,7 +25,7 @@ public:
     Stack();
 
     // Конструктор со списком инициализации
-    Stack(std::initializer_list<int> list);
+    Stack(const std::initializer_list<int> list);
 
     // Конструктор копирования
     Stack(const Stack& other);
@@ -43,7 +43,7 @@ public:
     Stack& operator=(Stack&& other) noexcept;
 
     // Добавление элемента в вершину стека
-    void push(int value);
+    void push(const int value);
 
     // Удаление и возврат верхнего элемента
     int pop();
@@ -67,7 +67,7 @@ public:
         Пример:
         stack << 10;
     */
-    friend Stack& operator<<(Stack& stack, int value);
+    friend Stack& operator<<(Stack& stack,const int value);
 
     /*
         Перегрузка оператора >>
